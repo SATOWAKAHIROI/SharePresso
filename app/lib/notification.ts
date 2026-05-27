@@ -1,5 +1,5 @@
 import { prisma } from "./prisma";
-import { NotificationType } from "@/app/generated/prisma";
+import { NotificationType } from "@prisma/client";
 
 export async function createNotification({
   userId,

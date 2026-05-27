@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FollowButton } from "./FollowButton";
-import { Prisma } from "@/app/generated/prisma";
+import { Prisma } from "@prisma/client";
 
 type UserWithCount = Prisma.UserGetPayload<{
   include: { _count: { select: { posts: true; followers: true; following: true } } };

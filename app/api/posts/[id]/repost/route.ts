@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/app/lib/supabase/server";
 import { prisma } from "@/app/lib/prisma";
 import { createNotification } from "@/app/lib/notification";
-import { RepostType } from "@/app/generated/prisma";
+import { RepostType } from "@prisma/client";
 
 type Context = { params: Promise<{ id: string }> };
 

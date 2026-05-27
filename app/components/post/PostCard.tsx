@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Prisma } from "@/app/generated/prisma";
+import { Prisma } from "@prisma/client";
 import { LikeButton } from "./LikeButton";
 import { RepostButton } from "./RepostButton";
 

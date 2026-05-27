@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Prisma, NotificationType } from "@/app/generated/prisma";
+import { Prisma, NotificationType } from "@prisma/client";
 
 type NotificationWithRelations = Prisma.NotificationGetPayload<{
   include: { actor: true; post: true };
