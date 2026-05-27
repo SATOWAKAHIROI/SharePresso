@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  bio       String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts              Post[]
+  likes              Like[]
+  reposts            Repost[]
+  following          Follow[]       @relation("Following")
+  followers          Follow[]       @relation("Followers")
+  notifications      Notification[] @relation("NotificationTarget")
+  actedNotifications Notification[] @relation("NotificationActor")
+}
+
+model Post {
+  id           String   @id @default(cuid())
+  content      String
+  drinkName    String
+  customDetail String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  images   PostImage[]
+  hashtags PostHashtag[]
+  likes    Like[]
+  reposts  Repost[]
+
+  quotePostId String?
+  quotePost   Post?   @relation("QuotePosts", fields: [quotePostId], references: [id])
+  quotedBy    Post[]  @relation("QuotePosts")
+
+  repostOfId String?
+  repostOf   Post?   @relation("Reposts", fields: [repostOfId], references: [id])
+  repostedBy Post[]  @relation("Reposts")
+
+  notifications Notification[]
+}
+
+model PostImage {
+  id     String @id @default(cuid())
+  url    String
+  order  Int
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Hashtag {
+  id    String        @id @default(cuid())
+  name  String        @unique
+  posts PostHashtag[]
+}
+
+model PostHashtag {
+  postId    String
+  hashtagId String
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  hashtag   Hashtag @relation(fields: [hashtagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, hashtagId])
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  userId    String
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+}
+
+model Repost {
+  id        String     @id @default(cuid())
+  type      RepostType
+  comment   String?
+  createdAt DateTime   @default(now())
+  userId    String
+  postId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post       @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId, type])
+}
+
+enum RepostType {
+  REPOST
+  QUOTE
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  followerId  String
+  followingId String
+  follower    User     @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  type      NotificationType
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  userId String
+  user   User   @relation("NotificationTarget", fields: [userId], references: [id], onDelete: Cascade)
+
+  actorId String
+  actor   User   @relation("NotificationActor", fields: [actorId], references: [id], onDelete: Cascade)
+
+  postId String?
+  post   Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+enum NotificationType {
+  LIKE
+  REPOST
+  QUOTE
+  FOLLOW
+}
