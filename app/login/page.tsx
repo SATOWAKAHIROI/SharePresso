@@ -6,7 +6,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm p-8 bg-white rounded-2xl shadow-sm space-y-6">
         <div className="text-center space-y-2">
           <div className="text-5xl">☕</div>
-          <h1 className="text-2xl font-bold text-[#1e3932]">Starbucks SNS</h1>
+          <h1 className="text-2xl font-bold text-[#1e3932]">SharePresso</h1>
           <p className="text-sm text-gray-500">カスタムドリンクをシェアしよう</p>
         </div>
         <div className="space-y-3">

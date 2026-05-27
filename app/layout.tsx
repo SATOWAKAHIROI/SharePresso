@@ -12,21 +12,21 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
   title: {
-    default: "Starbucks SNS",
-    template: "%s | Starbucks SNS",
+    default: "SharePresso",
+    template: "%s | SharePresso",
   },
-  description: "スターバックスのカスタムドリンクをシェアするSNS",
+  description: "カフェのカスタムドリンクをシェアするSNS",
   metadataBase: new URL(siteUrl),
   openGraph: {
     type: "website",
-    siteName: "Starbucks SNS",
-    title: "Starbucks SNS",
-    description: "スターバックスのカスタムドリンクをシェアするSNS",
+    siteName: "SharePresso",
+    title: "SharePresso",
+    description: "カフェのカスタムドリンクをシェアするSNS",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Starbucks SNS",
-    description: "スターバックスのカスタムドリンクをシェアするSNS",
+    title: "SharePresso",
+    description: "カフェのカスタムドリンクをシェアするSNS",
   },
 };
 

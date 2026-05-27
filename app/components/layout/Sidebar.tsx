@@ -13,7 +13,7 @@ export function Sidebar({ unreadCount = 0 }: { unreadCount?: number }) {
   return (
     <aside className="hidden md:flex flex-col w-64 h-screen sticky top-0 p-4 border-r border-gray-100 bg-white">
       <div className="mb-8 px-2">
-        <span className="text-xl font-bold text-[#1e3932]">☕ SBUX SNS</span>
+        <span className="text-xl font-bold text-[#1e3932]">☕ SharePresso</span>
       </div>
       <nav className="flex-1 space-y-1">
         {navItems.map((item) => (
